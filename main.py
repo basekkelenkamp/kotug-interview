@@ -1,7 +1,6 @@
-from pprint import pprint
 from dateutil.parser import parse
 from utils import read_json, haversine
-
+from time import sleep
 
 def clean_and_transform(data: dict):
     mmsi_list = []
@@ -23,6 +22,7 @@ def clean_and_transform(data: dict):
 
         if not item["navigation"]["status"] in unique_status:
             unique_status.append(item["navigation"]["status"])
+
         if item["device"]["mmsi"] in mmsi_list:
             count_duplicates += 1
         else:
@@ -69,6 +69,14 @@ def extract_vessel_data(data: dict):
 
     return vessel_data
 
+def print_dynamic_vessel_data(vessel_dynamic_values: dict, sleep_time: float = 0.1):
+    for dyn_item in vessel_dynamic_values:
+        long, lat = dyn_item["location"]["long"], dyn_item["location"]["lat"]
+        time_string = dyn_item["time"].strftime("%A, %B %d, %Y - %I:%M %p")
+        speed = dyn_item["speed"]
+        print(f"{time_string :<40} long/lat: {long:<10} {lat:<15} speed: {speed:<5}")
+        sleep(sleep_time)
+
 def sort_by_time(dynamic_values: dict):
     return sorted(dynamic_values, key=lambda x: x["time"])
 
@@ -82,3 +90,13 @@ if __name__ == "__main__":
     for mmsi, vessel in vessels.items():
         vessel["dynamic_values"] = sort_by_time(vessel["dynamic_values"])
 
+        # print("\nVESSEL:", vessel["name"])
+        # print_dynamic_vessel_data(vessel["dynamic_values"], sleep_time=0.005)
+
+
+    distance = haversine(
+        vessels["563495000"]["dynamic_values"][0]["location"],
+        vessels["224941000"]["dynamic_values"][0]["location"]
+    )
+    print(distance)
+    breakpoint()

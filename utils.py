@@ -7,11 +7,14 @@ def read_json(file_path) -> dict:
     return data["data"]
 
 
-def haversine(lon1: float, lat1: float, lon2: float, lat2: float) -> float:
+def haversine(location1: dict, location2: dict) -> float:
     """
     Calculate the great circle distance in kilometers between two points
     on the earth (specified in decimal degrees).
     """
+    lon1, lat1 = location1["long"], location1["lat"]
+    lon2, lat2 = location2["long"], location2["lat"]
+    
     # Convert decimal degrees to radians
     lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
 
