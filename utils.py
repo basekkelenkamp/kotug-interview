@@ -1,6 +1,7 @@
 import json
 from math import radians, cos, sin, asin, sqrt
 
+
 def read_json(file_path) -> dict:
     with open(file_path) as file:
         data = json.load(file)
@@ -14,7 +15,7 @@ def haversine(location1: dict, location2: dict) -> float:
     """
     lon1, lat1 = location1["long"], location1["lat"]
     lon2, lat2 = location2["long"], location2["lat"]
-    
+
     # Convert decimal degrees to radians
     lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
 
