@@ -203,5 +203,4 @@ if __name__ == "__main__":
     breakpoint()
 
     # TODO:
-    # check start/end location for each vessel and tug
-    # compare each tug to each vessel
+    # go through each tug/vessel and compare distance of all timestamps
